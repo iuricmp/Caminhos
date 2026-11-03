@@ -117,11 +117,11 @@ body.touch #super{bottom:calc(200px + env(safe-area-inset-bottom));left:auto;rig
 </style>
 </head>
 <body>
-<div class="seo"><h1>jogoIago – Tridente 22</h1><p>jogoIago é o jogo 3D de ação do Iago. Escolha o caminho do Tridente (praias e mares) ou do Zinzo (montanhas, cavernas e vulcões), derrote os feios de óculos Juliet, o Cauã e o Propinão em 20 fases, colete estrelinhas e compre skins. Funciona no computador e no celular.</p></div>
+<div class="seo"><h1>jogoIago – Tridente 22</h1><p>jogoIago é o jogo 3D de ação do Iago. Escolha o caminho do Tridente (praias e mares) ou do Zinzo (montanhas, cavernas e vulcões), derrote os feios de óculos Juliet, o Botizinho e o Propinão em 20 fases, colete estrelinhas e compre skins. Funciona no computador e no celular.</p></div>
 <div id="hud">
   <div class="tl"><div id="hearts"></div><div id="phase"></div><div id="wave"></div></div>
   <div class="tr"><div id="score">0</div><div id="wallet" style="color:var(--gold)"></div><div id="left"></div></div>
-  <div id="boss"><div id="bossname">CAUÃ — o Alien-Vaca</div><div id="bossbar"><div id="bossfill"></div></div></div>
+  <div id="boss"><div id="bossname">BOTIZINHO — o Alien-Vaca</div><div id="bossbar"><div id="bossfill"></div></div></div>
   <div id="super"><div id="superlabel">SUPER 22</div><div id="superbar"><div id="superfill"></div></div></div>
   <div id="banner"></div>
   <div id="two">2</div>
@@ -578,7 +578,7 @@ function makeEnemyModel(type) {
     }
     const tail = a(CG(.03, .03, .8, 5), cow, 0, 1.1, -.4); tail.rotation.x = -.6; a(SG(.08, 6, 5), spot, 0, .78, -.62);
     const gl = juliet(); gl.position.set(0, 2.42, .4); gl.scale.setScalar(1.3); S.add(gl);
-    const lab = makeLabel('CAUÃ', 'rgba(91,42,153,.85)', '#d4ff4a', 1.6); lab.position.y = 3.6; S.add(lab);
+    const lab = makeLabel('BOTIZINHO', 'rgba(91,42,153,.85)', '#d4ff4a', 1.6); lab.position.y = 3.6; S.add(lab);
     height = 3.25 * 1.5; radius = 1.15;
   }
   else if (VILLAINS[type]) {
@@ -1102,7 +1102,7 @@ const STAGES = {
     S('Ilha do Farol', 'sunset', r => buildSea(r, { lighthouse: true, rocks: 6, boats: 3, palms: 3, water: 0x3a6fa8 })),
     S('Praia à Noite', 'night', r => buildSea(r, { night: true, torches: 6, palms: 6, water: 0x123a6a })),
     S('Mar em Tempestade', 'storm', r => buildSea(r, { rain: true, wreck: true, rocks: 5, palms: 4, water: 0x3a5a6a, sand: [0xb8a27a, ['#a8926a', '#c8b28a']] })),
-    S('Ilha do Cauã', 'night', r => buildSea(r, { W: 22, D: 20, night: true, ufo: true, torches: 6, palms: 5, steps: 4, water: 0x103060 })),
+    S('Ilha do Botizinho', 'night', r => buildSea(r, { W: 22, D: 20, night: true, ufo: true, torches: 6, palms: 5, steps: 4, water: 0x103060 })),
     S('Fundo do Mar', 'deep', r => buildSea(r, { under: true, coral: 14, rocks: 4, palms: 0, wreck: true, sand: [0xd8c690, ['#c2b280', '#e6d6a0']], side: 0xb0a070 })),
     S('Mar Gelado', 'iceSea', r => buildSea(r, { ice: true, snow: true, palms: 0, rocks: 0, water: 0x2b6c9a, sand: [0xeef7ff, ['#ffffff', '#d6ecff']], side: 0xd6ecff })),
     S('Ilha dos Piratas', 'sunset', r => buildSea(r, { wreck: true, chests: 5, palms: 6, boats: 2, torches: 3, water: 0x2f78b0 })),
@@ -1124,7 +1124,7 @@ const STAGES = {
     S('Pico Nevado', 'snow', r => buildWild(r, { ground: ['#f2f7fc', ['#ffffff', '#dfeaf5']], pines: 7, snowy: true, snow: true, rocks: 4, rockC: 0xc8d6e0, cliff: 0xb0c0cc, mountains: 0xdfe8f0, snowCaps: true, platC: 0xdfe8f0, trimC: 0x9fb0c0 })),
     S('Ruínas Antigas', 'dusk', r => buildWild(r, { ground: ['#8a8a6a', ['#7a7a5a', '#9a9a7a', '#6a6a4a']], columns: 8, rocks: 3, leaves: true, cliff: 0x9a9080, platC: 0xd7ccc8, trimC: 0xa1887f })),
     S('Mina Abandonada', 'cave', r => buildWild(r, { ground: ['#4a3a2a', ['#3a2a1a', '#5a4a3a']], crates: 5, torches: 6, crystals: 3, crystalC: [0xffc531], ceiling: true, stalag: 2, cliff: 0x4a3a2a, platC: 0x6d4c41, trimC: 0x3e2723 })),
-    S('Cratera do Cauã', 'night', r => buildWild(r, { W: 22, D: 20, ground: ['#4a4a5a', ['#3a3a4a', '#5a5a6a']], night: true, ufo: true, rocks: 6, crystals: 3, crystalC: [0x9dff6a], steps: 4, cliff: 0x55556a })),
+    S('Cratera do Botizinho', 'night', r => buildWild(r, { W: 22, D: 20, ground: ['#4a4a5a', ['#3a3a4a', '#5a5a6a']], night: true, ufo: true, rocks: 6, crystals: 3, crystalC: [0x9dff6a], steps: 4, cliff: 0x55556a })),
     S('Vale dos Gigantes', 'mountain', r => buildWild(r, { ground: ['#7aa060', ['#6a9050', '#8ab070']], rocks: 9, pines: 4, mountains: 0x6a7580, snowCaps: true, cliff: 0x8a8f96 })),
     S('Floresta de Cogumelos', 'fungal', r => buildWild(r, { ground: ['#3a2a4a', ['#4a3a5a', '#2a1a3a', '#5a2a6a']], mush: 9, glowMush: true, sparkles: true, cliff: 0x4a3a5a, platC: 0x6a4a7a, trimC: 0xd500f9 })),
     S('Geleira Azul', 'iceSea', r => buildWild(r, { ground: ['#cde9ff', ['#b0dcff', '#e6f4ff']], crystals: 6, crystalC: [0x80d8ff, 0xb3e5fc, 0xffffff], snow: true, cliff: 0x9fd4f5, platC: 0xb3e5fc, trimC: 0x4fc3f7 })),
@@ -1149,7 +1149,7 @@ const PHASES = [
   { name: 'Gramado Norte', env: 'dusk', build: r => buildGarden(r, { W: 22, D: 22, steps: 4 }), waves: [['porco', 'porco', 'bode', 'bode'], ['urubu', 'urubu', 'urubu', 'rato', 'rato'], ['bode', 'sapo', 'sapo', 'porco', 'porco']] },
   { name: 'Salão Oval à Noite', env: 'nightIn', build: r => buildOval(r, { night: true }), waves: [['sapo', 'rato', 'rato', 'urubu'], ['bode', 'bode', 'sapo', 'sapo'], ['urubu', 'urubu', 'porco', 'porco', 'rato', 'rato']] },
   { name: 'Telhado da Casa Branca', env: 'sunset', build: r => buildRoof(r), waves: [['porco', 'rato', 'rato', 'sapo'], ['bode', 'urubu', 'urubu', 'sapo'], ['bode', 'bode', 'urubu', 'porco', 'rato', 'rato']] },
-  { name: 'O Chefe: CAUÃ', icon: '🐄', env: 'night', boss: true, build: r => buildGarden(r, { W: 22, D: 22, night: true, ufo: true, steps: 4 }), waves: [['caua']] },
+  { name: 'O Chefe: BOTIZINHO', icon: '🐄', env: 'night', boss: true, build: r => buildGarden(r, { W: 22, D: 22, night: true, ufo: true, steps: 4 }), waves: [['caua']] },
   { name: 'Sala de Imprensa', env: 'indoor', build: r => buildHall(r, { variant: 'cross' }), waves: [['propineiro', 'propineiro', 'mala'], ['mala', 'mala', 'propineiro', 'discursador']] },
   { name: 'Sala do Gabinete', env: 'indoor', build: r => buildHall(r, { variant: 'dining' }), waves: [['discursador', 'propineiro', 'propineiro'], ['mala', 'mala', 'laranja', 'laranja'], ['propineiro', 'discursador', 'discursador', 'rato']] },
   { name: 'Rosas ao Entardecer', env: 'dusk', build: r => buildGarden(r, { roses: true, W: 20, D: 20, steps: 4 }), waves: [['laranja', 'laranja', 'laranja', 'porco'], ['seguranca', 'propineiro', 'mala', 'mala'], ['discursador', 'discursador', 'laranja', 'laranja', 'sapo']] },
@@ -1169,7 +1169,7 @@ const DEFS = {
   sapo: { hp: 2, speed: 0, dmg: 1, score: 120 },
   bode: { hp: 4, speed: 2.6, dmg: 1, score: 150 },
   urubu: { hp: 2, speed: 5, dmg: 1, score: 150, fly: true },
-  caua: { hp: 48, speed: 3.6, dmg: 2, score: 5000, boss: true, bossName: 'CAUÃ', bossTitle: 'CAUÃ — o Alien-Vaca', minions: ['porco', 'rato', 'sapo', 'urubu', 'bode'] },
+  caua: { hp: 48, speed: 3.6, dmg: 2, score: 5000, boss: true, bossName: 'BOTIZINHO', bossTitle: 'BOTIZINHO — o Alien-Vaca', minions: ['porco', 'rato', 'sapo', 'urubu', 'bode'] },
   propineiro: { hp: 3, speed: 3.5, dmg: 1, score: 150 },
   mala: { hp: 2, speed: 6, dmg: 1, score: 120 },
   discursador: { hp: 3, speed: 2.4, dmg: 1, score: 180 },
@@ -1797,7 +1797,7 @@ function pounceLand(e) {
   const R = e.boss ? 4 : 1.5 + e.radius;
   burst(V(e.pos.x, e.pos.y + .1, e.pos.z), 0xc8b090, e.boss ? 30 : 10, e.boss ? 7 : 4, .14, .5, .6);
   if (e.boss) {
-    // Cauã cai espirrando leite
+    // Botizinho cai espirrando leite
     shake = Math.max(shake, .7); sfx('slam'); burst(V(e.pos.x, .3, e.pos.z), 0xffffff, 40, 8, .18, .8, .8);
     const ring = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, side: THREE.DoubleSide })); ring.rotation.x = -Math.PI / 2; ring.position.set(e.pos.x, .1, e.pos.z); scene.add(ring);
     rings.push({ m: ring, t: 0, max: .5, R });
@@ -2229,7 +2229,7 @@ function phaseClear() {
   }
   setTimeout(() => {
     if (state !== 'clear') return;
-    if (final) showOverlay('VITÓRIA!', `${starInfo}<p>Você derrotou o <b>Cauã</b> e o <b>Propinão</b> e salvou a Casa Branca dos feios e dos presidentes corruptos!</p><p>Pontuação final: <b>${score.toLocaleString('pt-BR')}</b></p>`,
+    if (final) showOverlay('VITÓRIA!', `${starInfo}<p>Você derrotou o <b>Botizinho</b> e o <b>Propinão</b> e salvou o mundo dos feios e dos presidentes corruptos!</p><p>Pontuação final: <b>${score.toLocaleString('pt-BR')}</b></p>`,
       [{ label: 'Jogar de novo', fn: () => startPhase(0) }, { label: '🛒 Loja de Skins', fn: shop, sec: true }, { label: 'Menu', fn: menu, sec: true }]);
     else showOverlay('FASE CONCLUÍDA!', `${starInfo}<p><b>${PHASES[phaseIdx].name}</b> está livre dos feios.</p><p>Pontos: <b>${score.toLocaleString('pt-BR')}</b></p><p>Próxima: <b>Fase ${phaseIdx + 2} · ${PHASES[phaseIdx + 1].name}</b></p>`,
       [{ label: 'Próxima fase ▶', fn: () => startPhase(phaseIdx + 1) }, { label: '🛒 Loja de Skins', fn: shop, sec: true }, { label: 'Menu', fn: menu, sec: true }]);
@@ -2268,7 +2268,7 @@ function menu() {
   player.pos.copy(spawnPoint); player.facing = 0; player.g.rotation.y = 0; player.g.visible = true; trident.state = 'hand'; applySkin(currentSkin);
   const best = parseInt(load('tridente22.best', '0')) || 0;
   showOverlay('TRIDENTE 22', `<h2>A Invasão dos Feios</h2>
-    <p>Animais muito feios de <b>óculos Juliet</b> invadiram o mundo, comandados pelo <b>Cauã</b>, metade alienígena e metade vaca. Depois vêm os <b>presidentes corruptos</b> e o chefão <b>Propinão</b>. Vá pelo caminho do <b>🔱 Tridente</b> (praias e mares) ou do <b>🔨 Zinzo</b> (montanhas, cavernas e vulcões) e limpe as 20 fases! A cada fase os feios têm mais vida. Pegue as <b>3 estrelinhas</b> escondidas em cada fase.</p>
+    <p>Animais muito feios de <b>óculos Juliet</b> invadiram o mundo, comandados pelo <b>Botizinho</b>, metade alienígena e metade vaca. Depois vêm os <b>presidentes corruptos</b> e o chefão <b>Propinão</b>. Vá pelo caminho do <b>🔱 Tridente</b> (praias e mares) ou do <b>🔨 Zinzo</b> (montanhas, cavernas e vulcões) e limpe as 20 fases! A cada fase os feios têm mais vida. Pegue as <b>3 estrelinhas</b> escondidas em cada fase.</p>
     <p><span class="wallet">⭐ ${wallet}</span> estrelinhas${best ? ` · Recorde: <b>${best.toLocaleString('pt-BR')}</b>` : ''}</p>
     <div class="grid">${PHASES.map((P, i) => `<button class="btn ${P.boss ? 'boss' : 'sec'}" data-ph="${i}" ${i + 1 > unlocked ? 'disabled' : ''} title="${P.name}">${i + 1 > unlocked ? '🔒' : P.icon || i + 1}${bestStars[i] ? `<small>${'★'.repeat(bestStars[i])}${'☆'.repeat(3 - bestStars[i])}</small>` : ''}</button>`).join('')}</div>`,
     [{ label: unlocked > 1 ? `▶ Continuar (Fase ${unlocked})` : '▶ Jogar', fn: () => choosePath(unlocked - 1) }, { label: '🛒 Loja de Skins', fn: shop, sec: true }], true);
