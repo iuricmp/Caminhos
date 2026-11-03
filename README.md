@@ -1,3 +1,3 @@
-# jogoIago
+# Caminhos
 
-Tridente 22, o jogo 3D de ação do Iago. Jogue em https://iuricmp.github.io/jogoIago/
+Caminhos, o jogo 3D de ação do Iago (jogoIago). Jogue em https://iuricmp.github.io/Caminhos/
