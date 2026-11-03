@@ -103,13 +103,25 @@ body.touch:not(.playing) #touch{display:none}
 #stick{position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.3);display:none;transform:translate(-50%,-50%)}
 #knob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:rgba(255,255,255,.55)}
 #stickhint{position:absolute;left:18px;bottom:calc(30px + env(safe-area-inset-bottom));font-size:13px;opacity:.6;text-shadow:0 2px 3px #000}
-.tbtn{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(20,30,60,.55);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:12px;line-height:1.1;touch-action:none;font-family:inherit}
+.tbtn{position:absolute;pointer-events:auto;border-radius:16px;border:2px solid rgba(255,255,255,.55);background:rgba(20,30,60,.55);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:12px;line-height:1.1;touch-action:none;font-family:inherit}
 .tbtn span{font-size:26px}
 .tbtn:active,.tbtn.on{background:rgba(255,197,49,.6)}
-#bJump{right:22px;bottom:calc(26px + env(safe-area-inset-bottom));width:86px;height:86px}
-#bThrow{right:122px;bottom:calc(22px + env(safe-area-inset-bottom));width:70px;height:70px}
-#bDash{right:30px;bottom:calc(126px + env(safe-area-inset-bottom));width:66px;height:66px}
-#b2{right:118px;bottom:calc(112px + env(safe-area-inset-bottom));width:58px;height:58px;border-color:var(--gold);color:var(--gold)}
+#bJump,#bThrow,#bDash,#b2{width:76px;height:76px}
+#bJump{right:calc(16px + env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));background:rgba(30,90,200,.6)}
+#bThrow{right:calc(102px + env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));background:rgba(200,50,50,.6)}
+#bDash{right:calc(16px + env(safe-area-inset-right));bottom:calc(104px + env(safe-area-inset-bottom));background:rgba(40,150,90,.6)}
+#b2{right:calc(102px + env(safe-area-inset-right));bottom:calc(104px + env(safe-area-inset-bottom));border-color:var(--gold);color:var(--gold)}
+#bChat{right:14px;top:calc(130px + env(safe-area-inset-top));width:44px;height:44px;font-size:20px}
+#chat{position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:6;display:none}
+.chatbox{max-width:460px;margin:0 auto;background:var(--panel);border:2px solid rgba(255,197,49,.55);border-radius:16px;padding:12px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.chathead{display:flex;justify-content:space-between;align-items:center;font-weight:900;color:var(--gold);margin-bottom:6px}
+.chathead button{background:none;border:0;color:#fff;font-size:20px;cursor:pointer;padding:4px 8px}
+#chatlog{font-size:13px;line-height:1.45;max-height:120px;overflow:auto;margin-bottom:8px}
+#chatlog b{color:var(--gold)}
+#chatform{display:flex;gap:8px}
+#chatin{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:2px solid #2b3557;background:#0d1328;color:#fff;user-select:text;-webkit-user-select:text}
+#chatin:focus{outline:none;border-color:var(--gold)}
+#chatform .btn{padding:10px 14px;font-size:15px}
 #b2 span{font-size:30px}
 #b2.ready{background:rgba(255,197,49,.35);box-shadow:0 0 18px var(--gold)}
 #bPause{right:14px;top:calc(76px + env(safe-area-inset-top));width:44px;height:44px;font-size:18px}
@@ -130,12 +142,18 @@ body.touch #super{bottom:calc(200px + env(safe-area-inset-bottom));left:auto;rig
 <div id="touch">
   <div id="stick"><div id="knob"></div></div>
   <div id="stickhint">◀ arraste aqui para andar</div>
-  <button class="tbtn" id="bJump"><span>⤒</span>PULO</button>
+  <button class="tbtn" id="bJump"><span>⤒</span>PULAR</button>
   <button class="tbtn" id="bThrow"><span>🔱</span>LANÇAR</button>
   <button class="tbtn" id="bDash"><span>»</span>DASH</button>
-  <button class="tbtn" id="b2"><span>2</span></button>
+  <button class="tbtn" id="b2"><span>2</span>SUPER</button>
   <button class="tbtn" id="bPause">❚❚</button>
+  <button class="tbtn" id="bChat" aria-label="Abrir chat de códigos">💬</button>
 </div>
+<div id="chat"><div class="chatbox">
+  <div class="chathead"><span>💬 Chat de códigos</span><button id="chatx" aria-label="Fechar chat">✕</button></div>
+  <div id="chatlog"><div>Digite <b>22</b> para Trump e Flávio virem ajudar (com a barra do super cheia) ou <b>11</b> para a loja secreta.</div></div>
+  <form id="chatform"><input id="chatin" autocomplete="off" autocapitalize="off" enterkeyhint="send" placeholder="Digite um código..."><button class="btn" type="submit">Enviar</button></form>
+</div></div>
 <div id="overlay"><div class="panel" id="panel"></div></div>
 
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
@@ -1440,7 +1458,7 @@ function applyWeapons(preview) {
 function setPath(p) {
   if (p !== path) { skinOf[path] = currentSkin; currentSkin = skinOf[p]; path = p; applySkin(currentSkin); }
   store('tridente22.path', p); showWeapon(); applyWeapons();
-  $('bThrow').innerHTML = p === 'zinzo' ? '<span>🔨</span>ZINZO' : '<span>🔱</span>LANÇAR';
+  $('bThrow').innerHTML = p === 'zinzo' ? '<span>🔨</span>BATER' : '<span>🔱</span>LANÇAR';
 }
 const player = { g: playerRoot, pos: playerRoot.position, vel: V(), radius: .4, height: 1.8, onGround: false, jumps: 0, coyote: 0, dashT: 0, dashCd: 0, airDash: true, dashDir: V(), facing: Math.PI, hp: 6, maxHp: 6, inv: 0, throwAnim: 0, dashHit: new Set() };
 
@@ -1554,6 +1572,7 @@ function pressTwo() {
   else last2 = now;
 }
 addEventListener('keydown', e => {
+  if (e.target && e.target.id === 'chatin') { if (e.key === 'Escape') closeChat(); return; }
   if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault();
   if ((e.code === 'KeyP' || e.code === 'Escape') && !e.repeat) { if (state === 'playing') pause(); else if (state === 'paused') resume(); return; }
   keys.add(e.code);
@@ -1605,6 +1624,24 @@ const endPtr = e => {
 };
 addEventListener('pointerup', endPtr); addEventListener('pointercancel', endPtr);
 const tb = (id, fn) => $(id).addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (state === 'playing') fn(); });
+// chat: no celular dá para digitar os códigos (22 = ajuda dos aliados, 11 = loja secreta)
+function chatSay(who, text) { const d = document.createElement('div'); d.innerHTML = `<b>${who}:</b> `; d.append(text); $('chatlog').append(d); $('chatlog').scrollTop = 1e9; }
+function openChat() { if (state !== 'playing') return; state = 'chat'; keys.clear(); jumpQ = dashQ = throwQ = false; $('chat').style.display = 'block'; $('chatin').value = ''; $('chatin').focus(); }
+function closeChat() { $('chat').style.display = 'none'; $('chatin').blur(); if (state === 'chat') state = 'playing'; }
+$('chatform').addEventListener('submit', e => {
+  e.preventDefault();
+  const t = $('chatin').value.trim(); $('chatin').value = ''; if (!t) return;
+  chatSay('Você', t); const c = t.replace(/\s/g, '');
+  if (c.includes('22')) {
+    const ready = superCharge >= 1;
+    chatSay('Jogo', ready ? 'Trump e Flávio estão chegando!' : `O super ainda está carregando (${Math.floor(superCharge * 100)}%). Tente de novo quando a barra encher.`);
+    if (ready) { closeChat(); trySuper(); }
+  } else if (c.includes('11')) { closeChat(); secretCode(); }
+  else chatSay('Jogo', 'Não conheço esse código. Tente 22 ou 11.');
+});
+$('chatx').addEventListener('click', closeChat);
+$('bChat').addEventListener('pointerdown', e => e.stopPropagation());
+$('bChat').addEventListener('click', openChat);
 tb('bJump', () => jumpQ = true); tb('bDash', () => dashQ = true); tb('bThrow', () => throwQ = true); tb('b2', pressTwo);
 $('bPause').addEventListener('pointerdown', e => { e.preventDefault(); if (state === 'playing') pause(); });
 function moveInput() {
