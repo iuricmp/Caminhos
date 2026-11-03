@@ -2267,7 +2267,7 @@ function menu() {
   state = 'menu'; $('hud').style.display = 'none'; resetEntities(); clearLevel(); PHASES[0].build(mulberry32(1000)); setEnv(PHASES[0].env);
   player.pos.copy(spawnPoint); player.facing = 0; player.g.rotation.y = 0; player.g.visible = true; trident.state = 'hand'; applySkin(currentSkin);
   const best = parseInt(load('tridente22.best', '0')) || 0;
-  showOverlay('TRIDENTE 22', `<h2>A Invasão dos Feios</h2>
+  showOverlay('CAMINHOS', `<h2>A Invasão dos Feios</h2>
     <p>Animais muito feios de <b>óculos Juliet</b> invadiram o mundo, comandados pelo <b>Botizinho</b>, metade alienígena e metade vaca. Depois vêm os <b>presidentes corruptos</b> e o chefão <b>Propinão</b>. Vá pelo caminho do <b>🔱 Tridente</b> (praias e mares) ou do <b>🔨 Zinzo</b> (montanhas, cavernas e vulcões) e limpe as 20 fases! A cada fase os feios têm mais vida. Pegue as <b>3 estrelinhas</b> escondidas em cada fase.</p>
     <p><span class="wallet">⭐ ${wallet}</span> estrelinhas${best ? ` · Recorde: <b>${best.toLocaleString('pt-BR')}</b>` : ''}</p>
     <div class="grid">${PHASES.map((P, i) => `<button class="btn ${P.boss ? 'boss' : 'sec'}" data-ph="${i}" ${i + 1 > unlocked ? 'disabled' : ''} title="${P.name}">${i + 1 > unlocked ? '🔒' : P.icon || i + 1}${bestStars[i] ? `<small>${'★'.repeat(bestStars[i])}${'☆'.repeat(3 - bestStars[i])}</small>` : ''}</button>`).join('')}</div>`,
