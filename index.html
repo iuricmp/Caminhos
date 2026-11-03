@@ -77,6 +77,39 @@ canvas{display:block;touch-action:none}
 .skin .sw{width:42px;height:42px;border-radius:50%;margin:0 auto 6px;border:2px solid #fff5}
 .skin .pr{font-size:12px;opacity:.85;margin-top:3px}
 .skin.locked .sw{filter:grayscale(.5) brightness(.7)}
+.rotatehint{display:none;font-size:13px;opacity:.8;margin:4px 0}
+@media (orientation:portrait){body.touch .rotatehint{display:block}}
+/* celular deitado: tela baixa, então tudo fica mais compacto */
+@media (orientation:landscape) and (max-height:500px){
+  #overlay{padding:8px}
+  .panel{padding:12px 16px;max-width:720px}
+  .panel h1{font-size:30px}
+  .panel h2{margin:2px 0 4px;font-size:15px}
+  .panel p{margin:4px 0;font-size:13px}
+  .panel .story{display:none}
+  .grid{grid-template-columns:repeat(10,1fr);gap:6px;margin:6px 0}
+  .grid .btn{padding:6px 0;font-size:13px}
+  .btns{margin:8px 0 4px}
+  .btn{padding:9px 16px;font-size:14px}
+  .controls{font-size:11px;line-height:1.45;padding:6px 10px}
+  .stars{font-size:32px;margin:2px 0}
+  .paths{margin:8px 0}
+  .pathc{padding:8px}
+  .pathc .ic{font-size:34px}
+  #overlay.shop{justify-content:flex-end;align-items:center;padding-right:max(12px, env(safe-area-inset-right))}
+  #overlay.shop .panel{max-height:94vh;max-width:52vw;padding:10px 12px}
+  #overlay.shop .panel h1{font-size:22px}
+  .skins{grid-template-columns:repeat(3,1fr);gap:6px}
+  .skin{font-size:11px;padding:5px 2px}
+  .skin .sw{width:30px;height:30px;margin-bottom:3px}
+  html body.touch #super{right:calc(196px + env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));width:150px}
+  html #boss{top:calc(8px + env(safe-area-inset-top));left:56%;width:min(300px,38vw);font-size:12px}
+  html #bChat{top:calc(64px + env(safe-area-inset-top));right:calc(66px + env(safe-area-inset-right))}
+  html #bPause{top:calc(64px + env(safe-area-inset-top))}
+  html #stickhint{bottom:calc(14px + env(safe-area-inset-bottom))}
+  #chat{top:calc(6px + env(safe-area-inset-top))}
+  #chatlog{max-height:70px}
+}
 .tabs{display:flex;gap:6px;justify-content:center;margin:8px 0}
 .tab{flex:1;max-width:220px;cursor:pointer;border:2px solid #2b3557;background:#151b30;color:#fff;border-radius:10px;padding:7px 6px;font-weight:800;font-size:13px;font-family:inherit}
 .tab.on{border-color:var(--gold);background:#2a3560;color:var(--gold)}
@@ -151,7 +184,7 @@ body.touch #super{bottom:calc(200px + env(safe-area-inset-bottom));left:auto;rig
 </div>
 <div id="chat"><div class="chatbox">
   <div class="chathead"><span>💬 Chat de códigos</span><button id="chatx" aria-label="Fechar chat">✕</button></div>
-  <div id="chatlog"><div>Digite <b>22</b> para Trump e Flávio virem ajudar (com a barra do super cheia) ou <b>11</b> para a loja secreta.</div></div>
+  <div id="chatlog"><div>Digite <b>22</b> para Oliver Tree e Pelé virem ajudar (com a barra do super cheia).</div></div>
   <form id="chatform"><input id="chatin" autocomplete="off" autocapitalize="off" enterkeyhint="send" placeholder="Digite um código..."><button class="btn" type="submit">Enviar</button></form>
 </div></div>
 <div id="overlay"><div class="panel" id="panel"></div></div>
@@ -400,6 +433,10 @@ function makeHumanoid(o) {
     add(g, SG(.3), hm, 0, 2.03, -.03).scale.set(1.05, .45, 1.1);
     const sw = add(g, SG(.2), hm, .05, 2.07, .16); sw.scale.set(1.7, .45, .9); sw.rotation.z = -.25;
     for (const s of [-1, 1]) add(g, SG(.1), hm, s * .25, 1.96, -.04).scale.set(.5, 1.1, 1.2);
+  } else if (o.hair === 'bowl') {
+    add(g, SG(.3, 22, 14), hairM, 0, 1.99, -.01).scale.set(1.08, .62, 1.1);
+    add(g, BG(.5, .1, .1), hairM, 0, 2.03, .22);
+    for (const s of [-1, 1]) add(g, BG(.08, .2, .34), hairM, s * .27, 1.93, 0);
   } else if (o.hair === 'short') {
     add(g, SG(.285, 20, 14), hairM, 0, 1.99, -.03).scale.set(1, .55, 1.05);
     add(g, SG(.27, 16, 10), hairM, 0, 1.92, -.08).scale.set(1, .8, .9);
@@ -436,6 +473,23 @@ function makeHumanoid(o) {
   return { g, legs, armR: arms[0], armL: arms[1], cape };
 }
 
+// aliados do super 22
+const ALLIES = [
+  { skin: 0xf1c27d, suit: 0x2979ff, sleeve: 0xff4f9a, pants: 0x4a3a8a, shoes: 0xffffff, hair: 'bowl', hairColor: 0xe9cf6a, name: 'OLIVER TREE', labelBg: 'rgba(41,121,255,.85)',
+    extra: g => {
+      add(g, BG(.66, .2, .4), mat(0x1de9b6, { map: fabricTex }), 0, 1.12, 0).scale.z = .95;
+      add(g, BG(.2, .5, .41), mat(0xffd600, { map: fabricTex }), .12, 1.35, 0).rotation.z = .5;
+      for (const x of [-1, 1]) add(g, new THREE.TorusGeometry(.055, .012, 6, 16), mat(0x111111, { metalness: .6 }), x * .09, 1.93, .27);
+      add(g, BG(.07, .012, .012), mat(0x111111), 0, 1.94, .27);
+    } },
+  { skin: 0x5d3a1a, suit: 0xffdf00, shorts: true, pants: 0x1e4fb5, socks: 0xffffff, shoes: 0x111111, hair: 'short', hairColor: 0x111111, emblem: '10', emblemBg: '#ffdf00', emblemFg: '#1b7a3a', name: 'PELÉ', labelBg: 'rgba(0,156,59,.85)',
+    extra: g => {
+      add(g, new THREE.TorusGeometry(.13, .03, 6, 16), mat(0x1b7a3a), 0, 1.64, .02).rotation.x = Math.PI / 2;
+      for (const x of [-1, 1]) add(g, BG(.05, .55, .02), mat(0x1b7a3a), x * .33, 1.3, .18);
+      const ball = add(g, SG(.17, 14, 10), mat(0xffffff, { roughness: .4 }), .35, .17, .35);
+      for (let i = 0; i < 5; i++) { const a = i / 5 * 6.28; add(g, SG(.05, 6, 4), mat(0x111111), .35 + Math.cos(a) * .13, .17 + Math.sin(a) * .13, .43); }
+    } },
+];
 function moneyBag(arm, s = 1) {
   add(arm, SG(.2 * s, 10, 8), mat(0x8d6e63), 0, -.95 * s, .06).scale.set(1, 1.1, 1);
   const l = makeLabel('$', 'rgba(0,0,0,0)', '#ffc531', .7 * s); l.position.set(0, -.92 * s, .3); arm.add(l);
@@ -977,7 +1031,7 @@ function buildSea(rng, o = {}) {
   platStyle = { top: mat(0x9c7a4b), trim: mat(0xf5f5dc) };
   const sand = o.sand || [0xf2d79b, ['#e8c886', '#fff1c8', '#d9b674']];
   if (!o.under) seaPlane(o.water || 0x1e9be0, -.35, o.waterOp ?? .9);
-  island(W, D, speckTex('#' + sand[0].toString(16).padStart(6, '0'), sand[1]), o.side || 0xcfb27a);
+  island(W * 1.32 + 1, D * 1.32 + 1, speckTex('#' + sand[0].toString(16).padStart(6, '0'), sand[1]), o.side || 0xcfb27a);
   if (o.under) {
     const surf = mesh(new THREE.PlaneGeometry(320, 320), new THREE.MeshBasicMaterial({ color: 0x5fd0ff, transparent: true, opacity: .35, side: THREE.DoubleSide, fog: false })); surf.rotation.x = -Math.PI / 2; surf.position.y = 22; level.add(surf);
     const floor = mesh(new THREE.PlaneGeometry(320, 320), mat(0xc2b280), 0, -1.3, 0); floor.rotation.x = -Math.PI / 2; level.add(floor);
@@ -998,9 +1052,9 @@ function buildSea(rng, o = {}) {
     const w = add(level, new THREE.CylinderGeometry(2, 2, 40, 8, 1, true), mat(0x26c6da, { transparent: true, opacity: .75, flatShading: true }), -60 + i * 30, 0, -70); w.rotation.z = Math.PI / 2; w.scale.set(1, 1, 1);
     decorAnims.push(t => { const k = (t * .25 + i * .2) % 1; w.position.z = -90 + k * 50; w.scale.x = w.scale.z = .3 + Math.sin(k * Math.PI) * 2.5; });
   }
-  if (o.ice) around(rng, 16, 1.3, 3, (x, z) => { const s = rand(2, 6); add(level, new THREE.ConeGeometry(s, s * 2.2, 5), mat(0xe3f6ff, { flatShading: true, roughness: .2 }), x, s * .6, z); });
+  if (o.ice) around(rng, 16, 1.6, 3, (x, z) => { const s = rand(2, 6); add(level, new THREE.ConeGeometry(s, s * 2.2, 5), mat(0xe3f6ff, { flatShading: true, roughness: .2 }), x, s * .6, z); });
   scatter(rng, o.palms ?? 6, 1.4, (x, z) => palm(x, z, rand(.85, 1.2)), .78);
-  around(rng, o.ice ? 0 : 10, 1.0, 1.08, (x, z) => palm(x, z, rand(.9, 1.3), false));
+  around(rng, o.ice ? 0 : 10, 1.22, 1.3, (x, z) => palm(x, z, rand(.9, 1.3), false));
   scatter(rng, o.umbrellas || 0, 1.6, (x, z) => umbrella(x, z));
   scatter(rng, o.castles || 0, 2.4, (x, z) => sandcastle(x, z));
   scatter(rng, o.coral || 0, 1.2, (x, z) => coral(x, z));
@@ -1008,7 +1062,7 @@ function buildSea(rng, o = {}) {
   scatter(rng, o.torches || 0, 1.2, (x, z) => torch(x, z));
   scatter(rng, o.chests || 0, 1.6, (x, z) => { box(x, 0, z, 1.3, .8, .9, 0x6d4c41); add(level, BG(1.1, .15, .7), mat(0xffc531, { metalness: .8, emissive: 0x664400 }), x, .9, z); });
   if (o.ice) scatter(rng, 4, 1.8, (x, z) => rock(x, z, rand(.9, 1.5), 0xd6f1ff));
-  for (let i = 0; i < (o.boats || 0); i++) boat(rand(-1, 1) * (W + 8), -D - 6 - rand(0, 14));
+  for (let i = 0; i < (o.boats || 0); i++) boat(rand(-1, 1) * (W + 8), -D * 1.32 - 6 - rand(0, 12));
   if (o.night) { stars(); moon(); }
   if (o.rain) { fall(400, 0xaad4ff, .18, -22, { op: .6 }); lightning(); }
   if (o.snow) fall(300, 0xffffff, .25, -2.5, { sway: .8 });
@@ -1072,7 +1126,7 @@ function buildWild(rng, o = {}) {
   platStyle = { top: mat(o.platC || 0x8d8d8d, { flatShading: true }), trim: mat(o.trimC || 0x5d5d5d) };
   const gr = mesh(new THREE.PlaneGeometry(400, 400), new THREE.MeshStandardMaterial({ map: speckTex(o.ground[0], o.ground[1], 40) }), 0, -.01, 0); gr.rotation.x = -Math.PI / 2; level.add(gr);
   // paredões de pedra em volta da arena
-  around(rng, 34, 1.12, 1.45, (x, z) => { const s = rand(2.5, 5.5); const r = mesh(new THREE.DodecahedronGeometry(s, 0), mat(o.cliff || 0x7d7d7d, { flatShading: true }), x, s * .4, z); r.rotation.set(rand(0, 3), rand(0, 3), 0); r.scale.y = rand(1, 2.2); level.add(r); });
+  around(rng, 34, 1.4, 1.7, (x, z) => { const s = rand(2.5, 5.5); const r = mesh(new THREE.DodecahedronGeometry(s, 0), mat(o.cliff || 0x7d7d7d, { flatShading: true }), x, s * .4, z); r.rotation.set(rand(0, 3), rand(0, 3), 0); r.scale.y = rand(1, 2.2); level.add(r); });
   if (o.mountains) for (let i = 0; i < 9; i++) { const a = i / 9 * 6.28 + rng(), r = 120 + rng() * 40, h = 40 + rng() * 50; add(level, new THREE.ConeGeometry(h * .7, h, 6), mat(o.mountains, { flatShading: true }), Math.cos(a) * r, h / 2 - 2, Math.sin(a) * r); if (o.snowCaps) add(level, new THREE.ConeGeometry(h * .25, h * .36, 6), mat(0xffffff, { flatShading: true }), Math.cos(a) * r, h * .82 - 2, Math.sin(a) * r); }
   if (o.mesas) for (let i = 0; i < 8; i++) { const a = rng() * 6.28, r = 60 + rng() * 60, h = 15 + rng() * 25; add(level, CG(10 + rng() * 10, 13 + rng() * 10, h, 7), mat(0xb5532e, { flatShading: true }), Math.cos(a) * r, h / 2, Math.sin(a) * r); }
   if (o.lava) {
@@ -1081,13 +1135,13 @@ function buildWild(rng, o = {}) {
   }
   for (let i = 0; i < (o.pools || 0); i++) scatter(rng, 1, 2.4, (x, z) => pool(x, z, rand(1.2, 2.2), o.poolC || 0x3d5a40));
   scatter(rng, o.pines || 0, 1.6, (x, z) => pine(x, z, rand(.9, 1.3), o.snowy));
-  around(rng, o.pines ? 18 : 0, 1.02, 1.3, (x, z) => pine(x, z, rand(1.2, 2), o.snowy, false));
+  around(rng, o.pines ? 18 : 0, 1.22, 1.45, (x, z) => pine(x, z, rand(1.2, 2), o.snowy, false));
   scatter(rng, o.trees || 0, 1.8, (x, z) => bigTree(x, z, rand(.9, 1.3), o.treeC));
-  around(rng, o.trees ? 16 : 0, 1.02, 1.3, (x, z) => bigTree(x, z, rand(1.3, 2), o.treeC, false));
+  around(rng, o.trees ? 16 : 0, 1.25, 1.5, (x, z) => bigTree(x, z, rand(1.3, 2), o.treeC, false));
   scatter(rng, o.dead || 0, 1.4, (x, z) => deadTree(x, z));
   scatter(rng, o.cacti || 0, 1.4, (x, z) => cactus(x, z));
   scatter(rng, o.crystals || 0, 1.6, (x, z) => crystal(x, z, pick(o.crystalC || [0x9c6bff, 0x40c4ff, 0xff4fd8]), rand(.8, 1.4)));
-  around(rng, o.crystals ? 14 : 0, 1.05, 1.4, (x, z) => crystal(x, z, pick(o.crystalC || [0x9c6bff, 0x40c4ff, 0xff4fd8]), rand(1.6, 2.8)));
+  around(rng, o.crystals ? 14 : 0, 1.22, 1.45, (x, z) => crystal(x, z, pick(o.crystalC || [0x9c6bff, 0x40c4ff, 0xff4fd8]), rand(1.6, 2.8)));
   scatter(rng, o.mush || 0, 1.6, (x, z) => mushroom(x, z, o.glowMush));
   scatter(rng, o.columns || 0, 1.6, (x, z) => column(x, z, rng() > .4));
   scatter(rng, o.stalag || 0, 1.4, (x, z) => stalag(x, z, o.cliff || 0x6d5f7a));
@@ -1634,10 +1688,10 @@ $('chatform').addEventListener('submit', e => {
   chatSay('Você', t); const c = t.replace(/\s/g, '');
   if (c.includes('22')) {
     const ready = superCharge >= 1;
-    chatSay('Jogo', ready ? 'Trump e Flávio estão chegando!' : `O super ainda está carregando (${Math.floor(superCharge * 100)}%). Tente de novo quando a barra encher.`);
+    chatSay('Jogo', ready ? 'Oliver Tree e Pelé estão chegando!' : `O super ainda está carregando (${Math.floor(superCharge * 100)}%). Tente de novo quando a barra encher.`);
     if (ready) { closeChat(); trySuper(); }
   } else if (c.includes('11')) { closeChat(); secretCode(); }
-  else chatSay('Jogo', 'Não conheço esse código. Tente 22 ou 11.');
+  else chatSay('Jogo', 'Não conheço esse código. Tente 22.');
 });
 $('chatx').addEventListener('click', closeChat);
 $('bChat').addEventListener('pointerdown', e => e.stopPropagation());
@@ -2154,8 +2208,7 @@ function trySuper() {
   const right = V(Math.cos(camYaw), 0, -Math.sin(camYaw));
   const center = player.pos.clone();
   const figs = [
-    makeHumanoid({ skin: 0xf0b27a, suit: 0x1b2a49, tie: 0xc8102e, longTie: true, hair: 'trump', name: 'TRUMP', labelBg: 'rgba(200,16,46,.85)', pin: 0x3c3b6e }),
-    makeHumanoid({ skin: 0xe8b98f, suit: 0x2b2f36, tie: 0x009c3b, tieStripe: 0xffdf00, hair: 'short', beard: true, name: 'FLÁVIO', labelBg: 'rgba(0,156,59,.85)', pin: 0xffdf00 }),
+    makeHumanoid(ALLIES[0]), makeHumanoid(ALLIES[1]),
   ];
   figs.forEach((f, i) => {
     const s = i === 0 ? -1 : 1;
@@ -2258,8 +2311,7 @@ function phaseClear() {
   if (final) {
     const right = V(Math.cos(camYaw), 0, -Math.sin(camYaw));
     celebrate = [
-      makeHumanoid({ skin: 0xf0b27a, suit: 0x1b2a49, tie: 0xc8102e, longTie: true, hair: 'trump', name: 'TRUMP', labelBg: 'rgba(200,16,46,.85)' }),
-      makeHumanoid({ skin: 0xe8b98f, suit: 0x2b2f36, tie: 0x009c3b, tieStripe: 0xffdf00, hair: 'short', beard: true, name: 'FLÁVIO', labelBg: 'rgba(0,156,59,.85)' }),
+      makeHumanoid(ALLIES[0]), makeHumanoid(ALLIES[1]),
     ];
     celebrate.forEach((f, i) => { f.g.position.copy(player.pos).addScaledVector(right, i ? 2.2 : -2.2); f.g.rotation.y = camYaw; scene.add(f.g); });
     player.facing = camYaw;
@@ -2290,8 +2342,8 @@ const weaponHelp = () => path === 'zinzo'
     : '<b>Clique / J</b> no chão: pancada com o zinzo · <b>no ar: ZINZADA</b> — despenca e o chão explode! Cair em cima de um feio dá muito dano')
   : (isTouch ? '<b>🔱 Lançar</b> o tridente (ele volta pra sua mão)' : '<b>Clique / J:</b> lançar o tridente (ele volta pra sua mão)');
 const CONTROLS = () => isTouch
-  ? `<div class="controls"><b>Andar:</b> arraste no lado esquerdo (a câmera segue sozinha) · <b>Girar câmera:</b> arraste no lado direito<br><b>⤒ Pulo</b> (toque de novo no ar = pulo duplo) · <b>» Dash</b><br>${weaponHelp()}<br><b>Super:</b> quando a barra encher, toque <b>2</b> duas vezes → <b>22</b> chama Trump e Flávio!</div>`
-  : `<div class="controls"><b>WASD / setas:</b> andar — a câmera segue sozinha · <b>Q / E</b> ou arrastar o mouse: girar a câmera<br><b>Espaço:</b> pular (2x = pulo duplo) · <b>Shift:</b> dash<br>${weaponHelp()}<br><b>Digite 22</b> com a barra cheia: Trump e Flávio dão o <b>SUPER ATAQUE</b>!<br><b>P / Esc:</b> pausar</div>`;
+  ? `<div class="controls"><b>Andar:</b> arraste no lado esquerdo (a câmera segue sozinha) · <b>Girar câmera:</b> arraste no lado direito<br><b>⤒ Pulo</b> (toque de novo no ar = pulo duplo) · <b>» Dash</b><br>${weaponHelp()}<br><b>Super:</b> quando a barra encher, toque <b>2</b> duas vezes → <b>22</b> chama Oliver Tree e Pelé!</div>`
+  : `<div class="controls"><b>WASD / setas:</b> andar — a câmera segue sozinha · <b>Q / E</b> ou arrastar o mouse: girar a câmera<br><b>Espaço:</b> pular (2x = pulo duplo) · <b>Shift:</b> dash<br>${weaponHelp()}<br><b>Digite 22</b> com a barra cheia: Oliver Tree e Pelé dão o <b>SUPER ATAQUE</b>!<br><b>P / Esc:</b> pausar</div>`;
 function showOverlay(title, html, buttons, controls = false) {
   const p = $('panel');
   p.innerHTML = `<h1>${title}</h1>${html}<div class="btns"></div>${controls ? CONTROLS() : ''}`;
@@ -2305,10 +2357,12 @@ function menu() {
   player.pos.copy(spawnPoint); player.facing = 0; player.g.rotation.y = 0; player.g.visible = true; trident.state = 'hand'; applySkin(currentSkin);
   const best = parseInt(load('tridente22.best', '0')) || 0;
   showOverlay('CAMINHOS', `<h2>A Invasão dos Feios</h2>
-    <p>Animais muito feios de <b>óculos Juliet</b> invadiram o mundo, comandados pelo <b>Botizinho</b>, metade alienígena e metade vaca. Depois vêm os <b>presidentes corruptos</b> e o chefão <b>Propinão</b>. Vá pelo caminho do <b>🔱 Tridente</b> (praias e mares) ou do <b>🔨 Zinzo</b> (montanhas, cavernas e vulcões) e limpe as 20 fases! A cada fase os feios têm mais vida. Pegue as <b>3 estrelinhas</b> escondidas em cada fase.</p>
+    <p class="story">Animais muito feios de <b>óculos Juliet</b> invadiram o mundo, comandados pelo <b>Botizinho</b>, metade alienígena e metade vaca. Depois vêm os <b>presidentes corruptos</b> e o chefão <b>Propinão</b>. Vá pelo caminho do <b>🔱 Tridente</b> (praias e mares) ou do <b>🔨 Zinzo</b> (montanhas, cavernas e vulcões) e limpe as 20 fases! A cada fase os feios têm mais vida. Pegue as <b>3 estrelinhas</b> escondidas em cada fase.</p>
     <p><span class="wallet">⭐ ${wallet}</span> estrelinhas${best ? ` · Recorde: <b>${best.toLocaleString('pt-BR')}</b>` : ''}</p>
     <div class="grid">${PHASES.map((P, i) => `<button class="btn ${P.boss ? 'boss' : 'sec'}" data-ph="${i}" ${i + 1 > unlocked ? 'disabled' : ''} title="${P.name}">${i + 1 > unlocked ? '🔒' : P.icon || i + 1}${bestStars[i] ? `<small>${'★'.repeat(bestStars[i])}${'☆'.repeat(3 - bestStars[i])}</small>` : ''}</button>`).join('')}</div>`,
-    [{ label: unlocked > 1 ? `▶ Continuar (Fase ${unlocked})` : '▶ Jogar', fn: () => choosePath(unlocked - 1) }, { label: '🛒 Loja de Skins', fn: shop, sec: true }], true);
+    [{ label: unlocked > 1 ? `▶ Continuar (Fase ${unlocked})` : '▶ Jogar', fn: () => choosePath(unlocked - 1) }, { label: '🛒 Loja de Skins', fn: shop, sec: true },
+     ...(isTouch && document.documentElement.requestFullscreen ? [{ label: '📱 Tela cheia deitada', fn: goLandscape, sec: true }] : [])], true);
+  if (isTouch) $('panel').querySelector('.btns').insertAdjacentHTML('afterend', '<p class="rotatehint">📱 Vire o celular de lado para jogar na horizontal.</p>');
   $('panel').querySelectorAll('[data-ph]').forEach(b => b.onclick = () => { sfx('catch'); choosePath(+b.dataset.ph); });
   $('panel').querySelector('h1').onclick = () => {
     const now = performance.now(); titleTaps = titleTaps.filter(t => now - t < 6000); titleTaps.push(now);
@@ -2329,6 +2383,14 @@ function choosePath(i) {
     b.onpointerenter = () => { setPath(b.dataset.path); $('pathStage').textContent = `Fase ${i + 1} · ${PHASES[i].name}`; };
     b.onclick = () => { sfx('clear'); setPath(b.dataset.path); startPhase(i); };
   });
+}
+
+// celular: tela cheia e trava na horizontal (onde o navegador deixa)
+function goLandscape() {
+  const el = document.documentElement;
+  Promise.resolve(el.requestFullscreen ? el.requestFullscreen({ navigationUI: 'hide' }) : null)
+    .then(() => screen.orientation && screen.orientation.lock ? screen.orientation.lock('landscape') : null)
+    .catch(() => banner('Vire o celular de lado 📱', 1.6));
 }
 
 // ---------- código secreto 11 ----------
