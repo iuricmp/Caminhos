@@ -1241,7 +1241,7 @@ const DEFS = {
   sapo: { hp: 2, speed: 0, dmg: 1, score: 120 },
   bode: { hp: 4, speed: 2.6, dmg: 1, score: 150 },
   urubu: { hp: 2, speed: 5, dmg: 1, score: 150, fly: true },
-  caua: { hp: 48, speed: 3.6, dmg: 2, score: 5000, boss: true, bossName: 'BOTIZINHO', bossTitle: 'BOTIZINHO — o Alien-Vaca', minions: ['porco', 'rato', 'sapo', 'urubu', 'bode'] },
+  caua: { hp: 38, speed: 3.1, dmg: 1, score: 5000, boss: true, summons: [2, 2], bossName: 'BOTIZINHO', bossTitle: 'BOTIZINHO — o Alien-Vaca', minions: ['porco', 'rato', 'sapo', 'urubu', 'bode'] },
   propineiro: { hp: 3, speed: 3.5, dmg: 1, score: 150 },
   mala: { hp: 2, speed: 6, dmg: 1, score: 120 },
   discursador: { hp: 3, speed: 2.4, dmg: 1, score: 180 },
@@ -1912,8 +1912,9 @@ function throwAt(e, kind, n, spread) {
 }
 function bossAI(e, dt, dir, dist) {
   e.timer -= dt; e.face = Math.atan2(dir.x, dir.z);
-  if (!e.sum1 && e.hp <= e.maxHp * .66) { e.sum1 = true; summon(3, e); }
-  if (!e.sum2 && e.hp <= e.maxHp * .33) { e.sum2 = true; summon(4, e); }
+  const [s1, s2] = e.summons || [3, 4];
+  if (!e.sum1 && e.hp <= e.maxHp * .66) { e.sum1 = true; summon(s1, e); }
+  if (!e.sum2 && e.hp <= e.maxHp * .33) { e.sum2 = true; summon(s2, e); }
   const rage = e.hp < e.maxHp * .4 ? 1.3 : 1;
   const steer = (vx, vz, acc) => { e.vel.x += (vx - e.vel.x) * Math.min(1, acc * dt); e.vel.z += (vz - e.vel.z) * Math.min(1, acc * dt); };
   if (e.state === 'idle') { e.state = 'chase'; e.timer = 2.5; }
